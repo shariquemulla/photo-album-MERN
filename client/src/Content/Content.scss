@@ -1,0 +1,57 @@
+@import "./../base.scss";
+
+.content {
+    margin: 10px 5px;
+  
+    &__image {
+      padding-bottom: 10px;
+  
+      & > img {
+        width: 100%;
+        max-width: 500px;
+        min-width: 350px;
+        border-radius: 10px;
+      }
+    }
+  
+    &__title {
+      font-size: $base_font_size * 1.5;
+      padding-bottom: 10px;
+      font-weight: bold;
+    }
+  
+    &__caption {
+      padding-bottom: 10px;
+    }
+  
+    &__comments {
+      margin: 10px 0;
+    }
+  
+    &__commentSubmitted {
+      background-color: rgb(248, 248, 248);
+      border-left: 5px solid rgb(168, 168, 168);
+      margin: 20px 0;
+      padding: 10px;
+      width: 90%;
+      max-width: 800px;
+      word-wrap: break-word;
+    }
+  
+    &__commentAuthor {
+      font-weight: bold;
+    }
+  
+    &__commentText {
+      padding: 5px 0;
+      font-style: italic;
+    }
+  }
+  
+  #errorMessage {
+    // display: none;
+    font-size: $base_font_size * 1.5;
+    font-weight: bold;
+    color: red;
+    margin-top: 20px;
+  }

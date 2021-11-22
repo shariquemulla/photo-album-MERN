@@ -1,0 +1,28 @@
+@import "./../base.scss";
+
+.gallery {
+    @include display-flex;
+    // display: none;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 10px 0;
+  
+    &__thumbnail {
+      width: $thumbnail-width;
+      height: $thumbnail-height;
+      padding: 5px;
+      border-radius: 20px;
+      cursor: pointer;
+      opacity: 50%;
+  
+      &:hover {
+        opacity: 100%;
+      }
+    }
+  
+    .selected {
+      opacity: 100%;
+      cursor: default;
+    }
+  }
+  

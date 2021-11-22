@@ -1,0 +1,62 @@
+$base-font-size:18px;
+$base-font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+$thumbnail-height: 100px;
+$thumbnail-width: 100px;
+
+// mixin to implement vendor prefixes when setting display to flexbox
+@mixin display-flex() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+body {
+    font-family: $base-font-family;
+    font-size: $base-font-size;  
+    padding: 10px; 
+}
+
+.menu {
+    @include display-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: 5px;
+    align-items: center;
+    padding: 10px 5px;
+  
+    &__btn {
+      padding: 10px 15px;
+      border: transparent;
+      border-radius: 5px;
+      background-color: rgb(79, 109, 192);
+      color: white;
+      font-size: $base-font-size;
+      font-family: $base-font-family;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: rgba(79, 109, 192, 0.75);
+      }
+    }
+  
+    &__btn--highlighted {
+      background-color: rgb(219, 180, 51);
+  
+      &:hover {
+        background-color: rgb(219, 180, 51, 0.8);
+      }
+    }
+  
+  }
+  
+  button:disabled {
+    background-color: lightgray;
+    color: black;
+  
+    &:hover {
+      cursor: default;
+      background-color: lightgray;
+    }
+  }

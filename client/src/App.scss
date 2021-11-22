@@ -1,0 +1,15 @@
+@import "base.scss";
+
+nav {
+  @include display-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 15px;
+}
+
+nav > span {
+  padding: 10px;
+}
+
+
