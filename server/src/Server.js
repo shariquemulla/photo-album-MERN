@@ -94,52 +94,60 @@ app.get("/get", async (request, response) => {
 //     }
 // });
 
-// app.put("/put/:id", async (request, response) => {
-//     // construct a MongoClient object, passing in additional options
-//     let mongoClient = new MongoClient(URL, { useUnifiedTopology: true });
+app.put("/put", async (request, response) => {
+    console.log("HERERERERER");
+    // construct a MongoClient object, passing in additional options
+    let mongoClient = new MongoClient(URL, { useUnifiedTopology: true });
 
-//     // isolate route parameter and convert ot ObjectId object
-//     let id = ObjectId(request.sanitize(request.params.id));
+    // isolate route parameter and convert ot ObjectId object
+    // let id = ObjectId(request.sanitize(request.params.id));
 
-//     try {
-//         await mongoClient.connect();
+    let id = ObjectId(request.sanitize(request.body.photoId));
 
-//         // sanitize form input
-//         request.body.name = request.sanitize(request.body.name);
-//         request.body.description = request.sanitize(request.body.description);
-//         request.body.difficulty = request.sanitize(request.body.difficulty);
-//         request.body.courses.forEach(course => {
-//             course.code = request.sanitize(course.code);
-//             course.name = request.sanitize(course.name);
-//         });
+    try {
+        await mongoClient.connect();
 
-//         // get reference to collection
-//         let techCollection = mongoClient.db(DB_NAME).collection("technologies");
-//         let selector = {"_id": id};
-//         // let newValues = { $set : {"name": request.body.name, "description": request.body.description, "difficulty": request.body.difficulty, "courses": request.body.courses}};
-//         let newValues = { $set : request.body};
+        // sanitize form input
+        request.body.photoId = request.sanitize(request.body.photoId);
+        request.body.author = request.sanitize(request.body.author);
+        request.body.comment = request.sanitize(request.body.comment);
 
-//         let result = await techCollection.updateOne(selector, newValues);
+        // get reference to collection
+        let photosCollection = mongoClient.db(DB_NAME).collection("photos");
 
-//         if(result.matchedCount <= 0) {
-//             response.status(404);
-//             response.send({error: "No technology documents found with ID"});
-//             mongoClient.close();
-//             return;
-//         }
+        let result = await photosCollection.updateOne(
+            { "_id": id },
+            { "$push": 
+                {"comments": {
+                    $position: 0,
+                    $each: [{
+                                "comment": request.body.comment,
+                                "author": request.body.author
+                            }]
+                    }
+                }
+            }
+        );
 
-//         // status
-//         response.status(200);
-//         response.send({result});
+        if(result.matchedCount <= 0) {
+            response.status(404);
+            response.send({error: "No technology documents found with ID"});
+            mongoClient.close();
+            return;
+        }
 
-//     } catch (error) {
-//         console.log(`>>> ERROR : ${error.message}`);
-//         response.status(500);
-//         response.send({error: error.message});
-//     } finally {
-//         mongoClient.close();
-//     }
-// });
+        // status
+        response.status(200);
+        response.send({result});
+
+    } catch (error) {
+        console.log(`>>> ERROR : ${error.message}`);
+        response.status(500);
+        response.send({error: error.message});
+    } finally {
+        mongoClient.close();
+    }
+});
 
 // app.delete("/delete", async (request, response) => {
 //     // construct a MongoClient object, passing in additional options

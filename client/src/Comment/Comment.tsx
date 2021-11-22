@@ -5,7 +5,7 @@ import './Comment.scss';
 
 const Comment = ({visible, setShowAddComment, currentPhotoId, reloadFunction, setLoading}: CommentProps) => {
 
-    const INSERT_SCRIPT:string = "http://localhost/addComment.php";
+    const INSERT_SCRIPT:string = "http://localhost:8080/put";
 
     // Disable submit button
     const [disableSubmit, setdisableSubmit] = React.useState<boolean>(true);
@@ -42,8 +42,8 @@ const Comment = ({visible, setShowAddComment, currentPhotoId, reloadFunction, se
         setLoading(false);
       };
     
-    const onError = (message:string) => {
-        console.log("*** Error has occured during AJAX data transmission: " + message);
+    const onError = () => {
+        console.log("*** Error has occured during AJAX data transmission: " + "message");
         setShowError(true);
         setLoading(false);
     }

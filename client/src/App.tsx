@@ -93,7 +93,7 @@ const App = () => {
           <Jump visible={showJump} photos={photos} index={index} setIndex={setIndex}/>
           <Comment visible={showAddComment} 
                     setShowAddComment={setShowAddComment} 
-                    currentPhotoId={photos[index].id} 
+                    currentPhotoId={photos[index]._id} 
                     reloadFunction={loadPhotos}
                     setLoading={setLoading}/>
           <Content photo={photos[index]}/>

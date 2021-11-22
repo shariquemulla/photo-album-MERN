@@ -56,10 +56,10 @@ function sendJSONData(sendScript:string, jsonString:string, success:Function, fa
             failure();
         }
     });
-    xmlhttp.addEventListener("error", (e:Event) => {
-        failure();
-    });
-    xmlhttp.open("POST", sendScript, true);
+    // xmlhttp.addEventListener("error", (e:Event) => {
+    //     failure();
+    // });
+    xmlhttp.open("PUT", sendScript, true);
     // setting the content-type of the request so the server knows what format that data is coming as
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(jsonString);
