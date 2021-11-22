@@ -7,7 +7,7 @@ let ObjectId = require("mongodb").ObjectId;
 
 // MongoDB constants
 const URL = "mongodb://mongo:27017/";
-const DB_NAME = "dbData";
+const DB_NAME = "dbPhotoAlbum";
 
 // construct application object via express
 let app = express();
@@ -48,67 +48,15 @@ app.get("/get", async (request, response) => {
     }
 });
 
-// app.post("/post", async (request, response) => {
-//     // construct a MongoClient object, passing in additional options
-//     let mongoClient = new MongoClient(URL, { useUnifiedTopology: true });
-
-//     try {
-//         await mongoClient.connect();
-
-//         // console.log("BEFORE");
-//         // console.log(request.body.name);
-//         // console.log(request.body.description);
-
-//         // request.body.name = request.sanitize(request.body.name);
-//         // request.body.description = request.sanitize(request.body.description);
-
-//         // console.log("After");
-//         // console.log(request.body.name);
-//         // console.log(request.body.description);
-
-
-//         // sanitize form input
-//         request.body.name = request.sanitize(request.body.name);
-//         request.body.description = request.sanitize(request.body.description);
-//         request.body.difficulty = request.sanitize(request.body.difficulty);
-//         request.body.courses.forEach(course => {
-//             course.code = request.sanitize(course.code);
-//             course.name = request.sanitize(course.name);
-//         });
-
-//         // get reference to collection
-//         let techCollection = mongoClient.db(DB_NAME).collection("photos");
-
-//         let result = await techCollection.insertOne(request.body);
-
-//         // status
-//         response.status(200);
-//         response.send({result});
-
-//     } catch (error) {
-//         console.log(`>>> ERROR : ${error.message}`);
-//         response.status(500);
-//         response.send({error: error.message});
-//     } finally {
-//         mongoClient.close();
-//     }
-// });
-
 app.put("/put", async (request, response) => {
-    console.log("HERERERERER");
     // construct a MongoClient object, passing in additional options
     let mongoClient = new MongoClient(URL, { useUnifiedTopology: true });
-
-    // isolate route parameter and convert ot ObjectId object
-    // let id = ObjectId(request.sanitize(request.params.id));
-
     let id = ObjectId(request.sanitize(request.body.photoId));
 
     try {
         await mongoClient.connect();
 
         // sanitize form input
-        request.body.photoId = request.sanitize(request.body.photoId);
         request.body.author = request.sanitize(request.body.author);
         request.body.comment = request.sanitize(request.body.comment);
 
@@ -148,42 +96,6 @@ app.put("/put", async (request, response) => {
         mongoClient.close();
     }
 });
-
-// app.delete("/delete", async (request, response) => {
-//     // construct a MongoClient object, passing in additional options
-//     let mongoClient = new MongoClient(URL, { useUnifiedTopology: true });
-
-//     try {
-//         await mongoClient.connect();
-
-//         // sanitize form input
-//         let id = ObjectId(request.sanitize(request.body.id));
-//         let selector = {"_id": id};
-
-//         // get reference to collection
-//         let techCollection = mongoClient.db(DB_NAME).collection("technologies");
-
-//         let result = await techCollection.deleteOne(selector);
-
-//         if(result.deletedCount <= 0) {
-//             response.status(404);
-//             response.send({error: "No technology documents found with ID"});
-//             mongoClient.close();
-//             return;
-//         }
-
-//         // status
-//         response.status(200);
-//         response.send({result});
-
-//     } catch (error) {
-//         console.log(`>>> ERROR : ${error.message}`);
-//         response.status(500);
-//         response.send({error: error.message});
-//     } finally {
-//         mongoClient.close();
-//     }
-// });
 
 // wildcard to handle all other non-api URL routings and point to index.html
 app.use((request, response) => {

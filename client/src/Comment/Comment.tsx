@@ -39,7 +39,7 @@ const Comment = ({visible, setShowAddComment, currentPhotoId, reloadFunction, se
         setShowError(false);
         setAuthorInput("");
         setCommentInput("");
-        setLoading(false);
+        // setLoading(false);
       };
     
     const onError = () => {
